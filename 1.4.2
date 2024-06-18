@@ -1,0 +1,32 @@
+1.4.2 Exibe o percentual de estudantes de cada sexo.
+ CREATE OR REPLACE PROCEDURE sp_perc_por_genero(
+     OUT Masculino NUMERIC ( 10, 2 ),
+     OUT Feminino NUMERIC( 10, 2)
+     )
+ LANGUAGE plpgsql
+ AS $$
+ 
+ BEGIN
+     SELECT COUNT (*)
+     INTO Masculino
+     FROM tb_alunos
+     WHERE gender = 2;
+ 
+     SELECT COUNT (*)
+     INTO Feminino
+     FROM tb_alunos
+     WHERE gender = 1;
+     Feminino := (Feminino /(Feminino + Masculino))* 100;
+     Masculino :=(Masculino /(Feminino + Masculino))* 100;
+ END;
+ $$
+ 
+ DO $$
+ DECLARE
+     Masculino NUMERIC( 10, 2);
+     Feminino NUMERIC( 10, 2);
+ BEGIN
+     CALL sp_perc_por_genero(Feminino, Masculino);
+     RAISE NOTICE 'O percentual de Masculino é % e Feminino é %', Masculino, Feminino ;
+ END;
+ $$
