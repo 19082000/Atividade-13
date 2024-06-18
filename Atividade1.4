@@ -1,9 +1,3 @@
-
-###1.4 Escreva os seguintes stored procedures (incluindo um bloco anônimo de teste para cada
-um):
-####### çd,1.4.3 Recebe um sexo como parâmetro em modo IN e utiliza oito parâmetros em modo OUT
-para dizer qual o percentual de cada nota (variável grade) obtida por estudantes daquele
-sexo.
 CREATE OR REPLACE PROCEDURE sp_nota_genero(
     IN Genero INT,
     OUT Fail NUMERIC (10, 2),
@@ -127,39 +121,3 @@ $$
  END;
  $$
  
- 
-1.4.1 Exibe o número de estudantes maiores de idade.
- 
- CREATE OR REPLACE PROCEDURE sp_qt_maior_idade(
-     OUT Age INT
-     )
- LANGUAGE plpgsql
- AS $$
- BEGIN
-     SELECT COUNT (cod_id)
-     INTO age
-     FROM tb_alunos;
- 
- END;
- $$
- 
- DO $$
- DECLARE
-     Age INT;
- BEGIN
-     CALL sp_qt_maior_idade(Age);
-     RAISE NOTICE 'A quantidade de maior de idade é de %', Age;
- END;
- $$
- 
- CREATE TABLE tb_alunos(
-  cod_id SERIAL PRIMARY KEY,
-  Age INT,
-  Gender INT,
-  Salary INT,
-  Prep_exam INT,
-  Notes INT,
-  Grade INT
- );
- 
- SELECT * FROM tb_alunos;
